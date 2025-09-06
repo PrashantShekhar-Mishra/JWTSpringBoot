@@ -42,7 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 // Disable CSRF (not needed for stateless JWT)
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable() )
                 .cors(cors -> {})
                 // Configure endpoint authorization
                 .authorizeHttpRequests(auth -> auth

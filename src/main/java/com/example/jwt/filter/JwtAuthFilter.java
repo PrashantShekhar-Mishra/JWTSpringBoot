@@ -30,15 +30,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
 
-    private static final List<String> EXCLUDED_URLS = List.of(
-            "/auth/generateToken",
-            "/auth/addNewUser",
-            "/auth/welcome",
-            "/swagger-ui",
-            "/v3/api-docs"
-            // add more as needed
-    );
-
     @Autowired
     public JwtAuthFilter(@Lazy UserDetailsService userDetailsService,
                          JwtService jwtService) {
@@ -50,13 +41,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            String path = request.getServletPath();
 
-            // Skip JWT processing for public endpoints
-            if (EXCLUDED_URLS.stream().anyMatch(path::startsWith)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
             String authHeader = request.getHeader("Authorization");
             String token = null;
             String username = null;
